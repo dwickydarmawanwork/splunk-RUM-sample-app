@@ -30,7 +30,12 @@ export default function SplunkRumInit() {
     // Session Replay: browser-only, so load it dynamically after RUM starts.
     import("@splunk/otel-web-session-recorder").then(
       ({ default: SplunkSessionRecorder }) => {
-        SplunkSessionRecorder.init({ realm, rumAccessToken, debug: true });
+        // maskAllText defaults to true in the recorder, which renders text as blocks in replay.
+        SplunkSessionRecorder.init({
+          realm,
+          rumAccessToken,
+          maskAllText: false,
+        });
       },
     );
   }, []);
